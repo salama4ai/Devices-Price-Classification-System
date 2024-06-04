@@ -39,20 +39,20 @@ public class DeviceServiceImpl implements DeviceService {
         };
         Device newDevice = foundedDevice.get();
         return new ResponseEntity<>(newDevice, HttpStatus.OK);
-    }
+    };
 
     @Override
     public ResponseEntity<Device> create(AddNewDeviceData newDeviceData) {
-        final AddNewDeviceData addNewDeviceData = newDeviceData;
-        final Device newDevice = this.deviceRepository.save(addNewDeviceData);
+        AddNewDeviceData addNewDeviceData = newDeviceData;
+        Device newDevice = this.deviceRepository.save(addNewDeviceData);
         return new ResponseEntity<>(newDevice, HttpStatus.CREATED);
-    }
+    };
 
     @Override
     public ResponseEntity<Integer> predictPrice(int deviceId) {
         Optional<Device> device = this.deviceRepository.findById(deviceId);
         Device predictThisDevicePrice = device.get();
-
+        int priceRange = predictDevicePrice(Device predictThisDevicePrice)
         return new ResponseEntity<>(priceRange, HttpStatus.OK);
-    }
-}
+    };
+};

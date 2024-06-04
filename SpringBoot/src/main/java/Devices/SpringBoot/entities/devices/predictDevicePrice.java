@@ -15,7 +15,7 @@ public class predictDevicePrice {
             // get the python directory
             Path projectpath = Paths.get(cwd).getParent().getParent().getParent().getParent().getParent().getParent().getParent();
             // initialize builder
-            ProcessBuilder builder = new ProcessBuilder("python", projectpath+"scripts\\predict_price_range_func.py", addNewDeviceData).start();
+            ProcessBuilder builder = new ProcessBuilder("python", projectpath+"scripts\\predict_price_range_func.py", Device).start();
             // Run a python script
             Process process = builder.start();
             //processBuilder.command("currentWorkingDirectory//predict.py");
