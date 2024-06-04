@@ -10,20 +10,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-
+import java.lang.ProcessBuilder;
 
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
-
     private final DeviceRepository deviceRepository;
 
     @Autowired
     public DeviceServiceImpl(DeviceRepository deviceRepository) {
         this.deviceRepository = deviceRepository;
-    }
+    };
 
     @Override
     public ResponseEntity<List<Device>> findAll() {
@@ -52,7 +56,27 @@ public class DeviceServiceImpl implements DeviceService {
     public ResponseEntity<Integer> predictPrice(int deviceId) {
         Optional<Device> device = this.deviceRepository.findById(deviceId);
         Device predictThisDevicePrice = device.get();
-        int priceRange = predictDevicePrice(Device predictThisDevicePrice)
+        int priceRange = predictDevicePrice(predictThisDevicePrice);
         return new ResponseEntity<>(priceRange, HttpStatus.OK);
+    }
+
+    private Integer predictDevicePrice(Device predictThisDevicePrice) {
+        try {
+            //get the current working directory
+            String cwd = System.getProperty("user.dir");
+            // get the python directory
+            Path projectpath = Paths.get(cwd).getParent().getParent().getParent().getParent().getParent().getParent().getParent();
+            // initialize builder
+            ProcessBuilder builder = new ProcessBuilder("python", projectpath+"scripts\\predict_price_range_func.py", Device).start();
+            // Run a python script
+            Process process = builder.start();
+            //processBuilder.command("currentWorkingDirectory//predict.py");
+            // read the python file output
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            int predictedPrice = reader.readLine();
+            return predictedPrice;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
     };
 };
