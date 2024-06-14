@@ -1,6 +1,5 @@
 package Devices.SpringBoot.services.impl;
 
-import Devices.SpringBoot.entities.devices.AddNewDeviceData;
 import Devices.SpringBoot.entities.devices.Device;
 import Devices.SpringBoot.errors.DeviceNotFoundException;
 import Devices.SpringBoot.repositories.devices.DeviceRepository;
@@ -10,14 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.Optional;
-import java.lang.ProcessBuilder;
+
+import static Devices.SpringBoot.entities.devices.AddNewDeviceInstance.addNewDeviceInstance;
 
 
 @Service
@@ -39,44 +35,25 @@ public class DeviceServiceImpl implements DeviceService {
     public ResponseEntity<Device> findById(int id) {
         Optional<Device> foundedDevice = this.deviceRepository.findById(id);
         if(foundedDevice.isEmpty()){
-            throw new DeviceNotFoundException("there isn't any device with id = " + id);
+            throw new DeviceNotFoundException("device with that id is not exists");
         };
-        Device newDevice = foundedDevice.get();
-        return new ResponseEntity<>(newDevice, HttpStatus.OK);
+        Device device = foundedDevice.get();
+        return new ResponseEntity<>(device, HttpStatus.OK);
     };
 
     @Override
-    public ResponseEntity<Device> create(AddNewDeviceData newDeviceData) {
-        AddNewDeviceData addNewDeviceData = newDeviceData;
-        Device newDevice = this.deviceRepository.save(addNewDeviceData);
-        return new ResponseEntity<>(newDevice, HttpStatus.CREATED);
+    public ResponseEntity<Device> create(Float[] newDeviceInstanceData) {
+        Device newDeviceCreated = this.deviceRepository.save(
+                addNewDeviceInstance(newDeviceInstanceData));
+        return new ResponseEntity<>(newDeviceCreated, HttpStatus.CREATED);
     };
 
     @Override
     public ResponseEntity<Integer> predictPrice(int deviceId) {
-        Optional<Device> device = this.deviceRepository.findById(deviceId);
-        Device predictThisDevicePrice = device.get();
-        int priceRange = predictDevicePrice(predictThisDevicePrice);
+        Optional<Device> foundedDevice = this.deviceRepository.findById(deviceId);
+        if(foundedDevice.isEmpty()){
+            throw new DeviceNotFoundException("device with that id is not exists");};
+        int priceRange = foundedDevice.get().price_range;
         return new ResponseEntity<>(priceRange, HttpStatus.OK);
     }
-
-    private Integer predictDevicePrice(Device predictThisDevicePrice) {
-        try {
-            //get the current working directory
-            String cwd = System.getProperty("user.dir");
-            // get the python directory
-            Path projectpath = Paths.get(cwd).getParent().getParent().getParent().getParent().getParent().getParent().getParent();
-            // initialize builder
-            ProcessBuilder builder = new ProcessBuilder("python", projectpath+"scripts\\predict_price_range_func.py", Device).start();
-            // Run a python script
-            Process process = builder.start();
-            //processBuilder.command("currentWorkingDirectory//predict.py");
-            // read the python file output
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            int predictedPrice = reader.readLine();
-            return predictedPrice;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    };
 };

@@ -15,7 +15,7 @@ import static com.sun.imageio.plugins.jpeg.JPEG.version;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Device extends BaseEntity {
     //public Device getNewDevice() {return version;};
-}
+
+    };

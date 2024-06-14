@@ -10,9 +10,8 @@ public class ExceptionHandlers extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DeviceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public final ResponseEntity<ErrorResponse> handleDeviceNotFoundException(final DeviceNotFoundException){
-        ErrorResponse errorResponse = new ErrorResponse(//"404", ex.getMessage()
-        );
+    public final ResponseEntity<ErrorResponse> handleDeviceNotFoundException(final ErrorResponse DeviceNotFoundException){
+        ErrorResponse errorResponse = new ErrorResponse("404", "there isn't any device with that id");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     };
 };

@@ -8,6 +8,9 @@ import java.util.List;
 public interface DeviceService {
     ResponseEntity<List<Device>> findAll();
     ResponseEntity<Device> findById(int id);
-    ResponseEntity<Device> create(Device newDeviceData);
+    //ResponseEntity<Device> create(float[] newDeviceInstanceData);
+
+    ResponseEntity<Device> create(Float[] newDeviceInstanceData);
+
     ResponseEntity<Integer> predictPrice(int id);
 }

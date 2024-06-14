@@ -10,9 +10,22 @@ def predict_price_range_func():
                        'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height',
                        'px_width', 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g',
                        'touch_screen', 'wifi']
-       #device_to_predict_price = pd.DataFrame(columns=columns_names)
-       #device_to_predict_price.loc[-1] = argv
-       device_to_predict_price = pd.Series({name: val for name, val in zip(columns_names, sys.argv)})
-       price_range_prediction = LogisticRegressionModel.predict(device_to_predict_price)
-       return price_range_prediction
+       types = ["int", "int", "float", "int", "int", "int", "int", "float", "int", "int",
+                "int", "int", "int", "int", "int", "int", "int", "int", "int", "int", ]
+       cols_types = dict(zip(columns_names, cols_types))
+       features = [sys.args[1:]]
+       device_to_predict_price = pd.DataFrame(data=features, columns=columns_names).astype(cols_types)
+       #return price_range_prediction
+
+       #device_to_predict_price.loc[-1] = args
+       i = type(features)
+       j = len(features)
+       k = features
+       print(i)
+       print(j)
+       print(k)
+       return str(i), str(j), str(k)
+       return str(i)
+       return str(j)
+       return str(k)
 predict_price_range_func()

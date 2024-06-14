@@ -13,28 +13,26 @@ public class BaseEntity {
     @NotNull(message="id may not be null")
     @NotBlank(message="id may not be blank")
     public int id;
-    private int battery_power;
-    private int blue;
-    private float clock_speed;
-    private int dual_sim;
-    private int fc;
-    private int four_g;
-    private int int_memory;
-    private float m_dep;
-    private int mobile_wt;
-    private int n_cores;
-    private int pc;
-    private int px_height;
-    private int px_width;
-    private int ram;
-    private int sc_h;
-    private int sc_w;
-    private int talk_time;
-    private int three_g;
-    private int touch_screen;
-    private int wifi;
+    public int battery_power;
+    public int blue;
+    public float clock_speed;
+    public int dual_sim;
+    public int fc;
+    public int four_g;
+    public int int_memory;
+    public float m_dep;
+    public int mobile_wt;
+    public int n_cores;
+    public int pc;
+    public int px_height;
+    public int px_width;
+    public int ram;
+    public int sc_h;
+    public int sc_w;
+    public int talk_time;
+    public int three_g;
+    public int touch_screen;
+    public int wifi;
     public Integer price_range;
-    public String getVersion() {
-        return version;
-    };
+    //public String getVersion() {return version;};
 }
