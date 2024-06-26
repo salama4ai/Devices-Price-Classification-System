@@ -30,7 +30,8 @@ public class DeviceCommandLineRunner {
                     for (int i=1; i<=11; i++)
                     {
                         String[] csvRow = "".split(",");    // use comma as separator
-                        Float[] deviceRow = Arrays.stream(csvRow).map(Float::valueOf).toArray(Float[]::new);
+                        String[] csvRowArray = Arrays.copyOfRange(csvRow, 1, 20);
+                        Float[] deviceRow = Arrays.stream(csvRowArray).map(Float::valueOf).toArray(Float[]::new);
                         Device newDeviceInstance = addNewDeviceInstance(deviceRow);
                         deviceRepository.save(newDeviceInstance);
                     }

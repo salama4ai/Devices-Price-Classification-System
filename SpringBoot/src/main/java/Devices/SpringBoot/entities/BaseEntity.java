@@ -4,14 +4,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import static com.sun.imageio.plugins.jpeg.JPEG.version;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @MappedSuperclass
 public class BaseEntity {
     @Id
     @NotNull(message="id may not be null")
     @NotBlank(message="id may not be blank")
+    //@GeneratedValue(strategy=GenerationType.AUTO)
     public int id;
     public int battery_power;
     public int blue;

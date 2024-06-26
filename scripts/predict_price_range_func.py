@@ -13,7 +13,7 @@ def predict_price_range_func():
        types = ["int", "int", "float", "int", "int", "int", "int", "float", "int", "int",
                 "int", "int", "int", "int", "int", "int", "int", "int", "int", "int", ]
        cols_types = dict(zip(columns_names, cols_types))
-       features = [sys.args[1:]]
+       features = [sys.args]
        device_to_predict_price = pd.DataFrame(data=features, columns=columns_names).astype(cols_types)
        #return price_range_prediction
 
