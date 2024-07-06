@@ -53,7 +53,7 @@ public class DeviceServiceImpl implements DeviceService {
         Optional<Device> foundedDevice = this.deviceRepository.findById(deviceId);
         if(foundedDevice.isEmpty()){
             throw new DeviceNotFoundException("device with that id is not exists");};
-        int priceRange = foundedDevice.get().price_range;
+        int priceRange = foundedDevice.get().z_price_range;
         return new ResponseEntity<>(priceRange, HttpStatus.OK);
     }
 };

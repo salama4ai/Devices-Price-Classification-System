@@ -1,19 +1,19 @@
 package Devices.SpringBoot.entities;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @MappedSuperclass
 public class BaseEntity {
     @Id
     @NotNull(message="id may not be null")
-    @NotBlank(message="id may not be blank")
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    public int id;
+    //@NotBlank(message="id may not be blank")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public int _id;
     public int battery_power;
     public int blue;
     public float clock_speed;
@@ -34,6 +34,6 @@ public class BaseEntity {
     public int three_g;
     public int touch_screen;
     public int wifi;
-    public Integer price_range;
+    public Integer z_price_range;
     //public String getVersion() {return version;};
 }

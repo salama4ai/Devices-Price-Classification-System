@@ -14,7 +14,6 @@ public class AddNewDeviceInstance {
     //@Override
     public static Device addNewDeviceInstance(Float[] newDeviceInstanceData){
         Device newDeviceInstance = new Device();
-        //newDeviceInstance.id = (int)newDeviceInstanceData[0];
         newDeviceInstance.battery_power = (int)Math.floor(newDeviceInstanceData[0]);
         newDeviceInstance.blue = (int)Math.floor(newDeviceInstanceData[1]);
         newDeviceInstance.clock_speed = newDeviceInstanceData[2];
@@ -35,7 +34,7 @@ public class AddNewDeviceInstance {
         newDeviceInstance.three_g = (int)Math.floor(newDeviceInstanceData[17]);
         newDeviceInstance.touch_screen = (int)Math.floor(newDeviceInstanceData[18]);
         newDeviceInstance.wifi = (int)Math.floor(newDeviceInstanceData[19]);
-        newDeviceInstance.price_range = predictDevicePrice(newDeviceInstanceData);
+        newDeviceInstance.z_price_range = predictDevicePrice(newDeviceInstanceData);
         return newDeviceInstance;
     }
 

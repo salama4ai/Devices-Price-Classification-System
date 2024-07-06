@@ -20,19 +20,25 @@ public class DeviceCommandLineRunner {
     @Bean
     CommandLineRunner initDatabase(DeviceRepository deviceRepository){
         return args -> {
+            //get the current working directory
+            String cwd = System.getProperty("user.dir");
+            // get the python directory
+            Path projectpath = Paths.get(cwd).getParent();
+            String csvFile = projectpath + "\\data\\test - test.csv";
                 try
                 {//parsing a CSV file into BufferedReader class constructor
-                    //get the current working directory
-                    String cwd = System.getProperty("user.dir");
-                    // get the python directory
-                    Path projectpath = Paths.get(cwd).getParent();
-                    BufferedReader br = new BufferedReader(new FileReader(projectpath + "\\data\\test - test.csv"));
-                    for (int i=1; i<=11; i++)
+                    BufferedReader br = new BufferedReader(new FileReader(csvFile));
+                    String columnsNames = br.readLine();
+                    System.out.print(columnsNames);
+                    //String[] columnsvalue = br.readLine().split(",");
+                    //System.out.print(columnsvalue);
+                    for (int i=0; i<=9; i++)
                     {
-                        String[] csvRow = "".split(",");    // use comma as separator
-                        String[] csvRowArray = Arrays.copyOfRange(csvRow, 1, 20);
+                        String[] csvRow = br.readLine().split(",");    // use comma as separator
+                        String[] csvRowArray = Arrays.copyOfRange(csvRow, 1, 21);
                         Float[] deviceRow = Arrays.stream(csvRowArray).map(Float::valueOf).toArray(Float[]::new);
                         Device newDeviceInstance = addNewDeviceInstance(deviceRow);
+                        System.out.print(deviceRow);
                         deviceRepository.save(newDeviceInstance);
                     }
                 } catch (IOException e) {
