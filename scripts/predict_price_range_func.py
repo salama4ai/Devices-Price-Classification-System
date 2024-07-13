@@ -13,9 +13,11 @@ def predict_price_range_func():
        types = ["int", "int", "float", "int", "int", "int", "int", "float", "int", "int",
                 "int", "int", "int", "int", "int", "int", "int", "int", "int", "int", ]
        cols_types = dict(zip(columns_names, cols_types))
-       features = [sys.args]
+       features = [sys.args[:-1]]
        device_to_predict_price = pd.DataFrame(data=features, columns=columns_names).astype(cols_types)
+       price_range_prediction = LogisticRegressionModel.predict(device_to_predict_price)
        #return price_range_prediction
+       return "99"
 
        #device_to_predict_price.loc[-1] = args
        i = type(features)
@@ -28,4 +30,4 @@ def predict_price_range_func():
        return str(i)
        return str(j)
        return str(k)
-predict_price_range_func()
+price_range_prediction = predict_price_range_func()
