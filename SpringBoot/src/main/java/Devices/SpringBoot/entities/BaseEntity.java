@@ -11,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 public class BaseEntity {
     @Id
     @NotNull(message="id may not be null")
-    //@NotBlank(message="id may not be blank")
     @GeneratedValue(strategy=GenerationType.AUTO)
     public int _id;
     public int battery_power;
@@ -35,5 +34,4 @@ public class BaseEntity {
     public int touch_screen;
     public int wifi;
     public Integer z_price_range;
-    //public String getVersion() {return version;};
 }

@@ -52,7 +52,7 @@ public class AddNewDeviceInstance {
 
             // initialize builder
             ProcessBuilder builder = new ProcessBuilder(pythonInterpreterPath, predictionFunc, deviceInstance);
-            builder.redirectErrorStream(true);
+            //builder.redirectErrorStream(true);
 
             // Run this on Windows, cmd, /c = terminate after this run
             //builder.command("cmd.exe", "/c", "ping -n 3 google.com");
