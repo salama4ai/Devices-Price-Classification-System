@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.lang.ProcessBuilder;
 
-
 public class AddNewDeviceInstance {
 
     //@Override
@@ -44,17 +43,26 @@ public class AddNewDeviceInstance {
             String cwd = System.getProperty("user.dir");
             // get the python directory
             Path projectpath = Paths.get(cwd).getParent();
+            // python function prediction
+            String predictionFunc = projectpath + "\\scripts\\predict_price_range_func.py";
+            // path to python interpreter
+            String pythonInterpreterPath = "C:\\Users\\All\\miniconda3\\envs\\venv\\python";
             // convert array of floats into separate strings
-            String predictThisDeviceInstancePrice = String.join(",", Arrays.toString(newDeviceInstanceData));
+            String deviceInstance = String.join(",", Arrays.toString(newDeviceInstanceData));
+
             // initialize builder
-            ProcessBuilder builder = new ProcessBuilder("python",
-                    projectpath + "\\scripts\\predict_price_range_func.py",
-                    predictThisDeviceInstancePrice);
+            ProcessBuilder builder = new ProcessBuilder(pythonInterpreterPath, predictionFunc, deviceInstance);
+            builder.redirectErrorStream(true);
+
+            // Run this on Windows, cmd, /c = terminate after this run
+            //builder.command("cmd.exe", "/c", "ping -n 3 google.com");
             // Run a python script
             Process process = builder.start();
-            //processBuilder.command("currentWorkingDirectory//predict.py");
             // read the python file output
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            System.out.print(reader.readLine() + reader.read()// + builder.command()
+                     );
+
             return Integer.valueOf(reader.read());
         } catch (IOException e) {
             throw new RuntimeException(e);

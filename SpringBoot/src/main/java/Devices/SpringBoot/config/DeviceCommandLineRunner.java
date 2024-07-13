@@ -29,16 +29,14 @@ public class DeviceCommandLineRunner {
                 {//parsing a CSV file into BufferedReader class constructor
                     BufferedReader br = new BufferedReader(new FileReader(csvFile));
                     String columnsNames = br.readLine();
-                    System.out.print(columnsNames);
-                    //String[] columnsvalue = br.readLine().split(",");
-                    //System.out.print(columnsvalue);
+                    //System.out.print(columnsNames);
                     for (int i=0; i<=9; i++)
                     {
                         String[] csvRow = br.readLine().split(",");    // use comma as separator
                         String[] csvRowArray = Arrays.copyOfRange(csvRow, 1, 21);
                         Float[] deviceRow = Arrays.stream(csvRowArray).map(Float::valueOf).toArray(Float[]::new);
                         Device newDeviceInstance = addNewDeviceInstance(deviceRow);
-                        System.out.print(deviceRow);
+                        //System.out.print(deviceRow);
                         deviceRepository.save(newDeviceInstance);
                     }
                 } catch (IOException e) {
