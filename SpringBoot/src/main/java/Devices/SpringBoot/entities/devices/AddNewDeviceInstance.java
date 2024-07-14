@@ -49,18 +49,14 @@ public class AddNewDeviceInstance {
             String pythonInterpreterPath = "C:\\Users\\All\\miniconda3\\envs\\venv\\python";
             // convert array of floats into separate strings
             String deviceInstance = String.join(",", Arrays.toString(newDeviceInstanceData));
-
             // initialize builder
             ProcessBuilder builder = new ProcessBuilder(pythonInterpreterPath, predictionFunc, deviceInstance);
             //builder.redirectErrorStream(true);
-
-            // Run this on Windows, cmd, /c = terminate after this run
-            //builder.command("cmd.exe", "/c", "ping -n 3 google.com");
             // Run a python script
             Process process = builder.start();
             // read the python file output
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            System.out.print(reader.readLine() + reader.read()// + builder.command()
+            System.out.print(reader.readLine() + reader.read() + builder.command()
                      );
 
             return Integer.valueOf(reader.read());
