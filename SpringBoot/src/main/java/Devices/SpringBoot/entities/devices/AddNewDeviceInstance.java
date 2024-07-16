@@ -48,17 +48,17 @@ public class AddNewDeviceInstance {
             // path to python interpreter
             String pythonInterpreterPath = "C:\\Users\\All\\miniconda3\\envs\\venv\\python";
             // convert array of floats into separate strings
-            String deviceInstance = String.join(",", Arrays.toString(newDeviceInstanceData));
+            String deviceData = String.join(",", Arrays.toString(newDeviceInstanceData));
             // initialize builder
-            ProcessBuilder builder = new ProcessBuilder(pythonInterpreterPath, predictionFunc, deviceInstance);
+            ProcessBuilder builder = new ProcessBuilder(pythonInterpreterPath, predictionFunc, deviceData);
             //builder.redirectErrorStream(true);
             // Run a python script
             Process process = builder.start();
             // read the python file output
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
             System.out.print(reader.readLine() + reader.read() + builder.command()
                      );
-
             return Integer.valueOf(reader.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
