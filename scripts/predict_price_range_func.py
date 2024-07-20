@@ -1,34 +1,35 @@
 def predict_price_range_func():
-    #return "973"
+
     # importing the libraries
     import os
     import pandas as pd
     import joblib
     import sys
 
-
-    # Doing exec() on this file will alter the current interpreter's
-    # environment so you can import libraries in the virtualenv
-    # activate_this_file = "/path/to/virtualenv/bin/activate_this.py"
-    # python_bin = os.path.abspath(path="C:\\Users\\All\\miniconda3\\envs\\venv\\python")
-    # exec(open(python_bin).read(), {'__file__': python_bin})
-
+   # get the last string which is contains the device data separated by "," in string format
     device_data = sys.argv[-1]
-    features = list(map(float, device_data.split(',')))
-    #print(features)
-
+    # features list in format of string.
+    features = device_data.split(',')
+    # get the absolute path the project directory
     project_path = os.path.abspath(os.path.join("." ,".."))
+    # load the model
     LogisticRegressionModel = joblib.load(f'{project_path}\\data\\savings\\LogisticRegressionModel.joblib')
+    # define the list that contains the columns names
     columns_names = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
                     'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height',
                     'px_width', 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g',
                     'touch_screen', 'wifi']
+    # define the list that contains the type of every column
     cols_types = ["int", "int", "float", "int", "int", "int", "int", "float", "int", "int",
-             "int", "int", "int", "int", "int", "int", "int", "int", "int", "int"]
+                  "int", "int", "int", "int", "int", "int", "int", "int", "int", "int"]
+    # create dictionary of column names and it's types
     cols_types = dict(zip(columns_names, cols_types))
+    # create dataframe with the defined columns and types
     device_to_predict_price = pd.DataFrame(data=[pd.to_numeric(features)], columns=columns_names).astype(cols_types)
+    # get the model prediction of the device features
     price_range_prediction = LogisticRegressionModel.predict(device_to_predict_price)[0]
-    print(str(price_range_prediction))
+    #print(str(price_range_prediction))
+    # return the output
     return str(price_range_prediction)
 
 if __name__ == "__main__":

@@ -46,17 +46,16 @@ public class AddNewDeviceInstance {
             Path projectPath = Paths.get(cwd).getParent();
             // python function prediction
             String predictionFunc = projectPath.resolve("scripts\\predict_price_range_func.py").toString();
-            // path to python interpreter
-            String pythonInterpreterPath = Paths.get("C:\\Users\\All\\miniconda3\\envs\\venv\\python").toString();
             // convert array of floats into separate strings
             String deviceData = Arrays.toString(newDeviceInstanceData).replaceAll("[\\[\\] ]", "");
+            // the path to python interpreter  "C:\\Users\\All\\miniconda3\\envs\\venv\\python"
             // initialize builder
             ProcessBuilder builder = new ProcessBuilder("C:\\Users\\All\\miniconda3\\envs\\venv\\python", predictionFunc, deviceData);
             // Run a python script
             Process process = builder.start();
             // read the python file output
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            System.out.print(reader.readLine() + reader.read() + builder.command());
+            System.out.print(Integer.valueOf(reader.read()) + reader.readLine() + reader.read() + builder.command());
             return Integer.valueOf(reader.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
