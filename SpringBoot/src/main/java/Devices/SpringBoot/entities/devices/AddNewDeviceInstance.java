@@ -1,6 +1,7 @@
 package Devices.SpringBoot.entities.devices;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
@@ -37,28 +38,25 @@ public class AddNewDeviceInstance {
         return newDeviceInstance;
     }
 
-    private static Integer predictDevicePrice(Float[] newDeviceInstanceData) {
+    public static Integer predictDevicePrice(Float[] newDeviceInstanceData) {
         try {
             //get the current working directory
             String cwd = System.getProperty("user.dir");
             // get the python directory
-            Path projectpath = Paths.get(cwd).getParent();
+            Path projectPath = Paths.get(cwd).getParent();
             // python function prediction
-            String predictionFunc = projectpath + "\\scripts\\predict_price_range_func.py";
+            String predictionFunc = projectPath.resolve("scripts\\predict_price_range_func.py").toString();
             // path to python interpreter
-            String pythonInterpreterPath = "C:\\Users\\All\\miniconda3\\envs\\venv\\python";
+            String pythonInterpreterPath = Paths.get("C:\\Users\\All\\miniconda3\\envs\\venv\\python").toString();
             // convert array of floats into separate strings
-            String deviceData = String.join(",", Arrays.toString(newDeviceInstanceData));
+            String deviceData = Arrays.toString(newDeviceInstanceData).replaceAll("[\\[\\] ]", "");
             // initialize builder
-            ProcessBuilder builder = new ProcessBuilder(pythonInterpreterPath, predictionFunc, deviceData);
-            //builder.redirectErrorStream(true);
+            ProcessBuilder builder = new ProcessBuilder("C:\\Users\\All\\miniconda3\\envs\\venv\\python", predictionFunc, deviceData);
             // Run a python script
             Process process = builder.start();
             // read the python file output
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            System.out.print(reader.readLine() + reader.read() + builder.command()
-                     );
+            System.out.print(reader.readLine() + reader.read() + builder.command());
             return Integer.valueOf(reader.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
