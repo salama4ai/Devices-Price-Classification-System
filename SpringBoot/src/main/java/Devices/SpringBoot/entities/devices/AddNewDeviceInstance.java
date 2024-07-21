@@ -55,8 +55,9 @@ public class AddNewDeviceInstance {
             Process process = builder.start();
             // read the python file output
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            System.out.print(Integer.valueOf(reader.read()) + reader.readLine() + reader.read() + builder.command());
-            return Integer.valueOf(reader.read());
+            Integer output = Integer.valueOf(reader.readLine());
+            //System.out.print(output + (Integer.valueOf(reader.read())));
+            return output;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

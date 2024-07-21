@@ -28,9 +28,9 @@ def predict_price_range_func():
     device_to_predict_price = pd.DataFrame(data=[pd.to_numeric(features)], columns=columns_names).astype(cols_types)
     # get the model prediction of the device features
     price_range_prediction = LogisticRegressionModel.predict(device_to_predict_price)[0]
-    #print(str(price_range_prediction))
+    print(str(price_range_prediction))
     # return the output
-    return str(price_range_prediction)
+    return int(price_range_prediction)
 
 if __name__ == "__main__":
 
